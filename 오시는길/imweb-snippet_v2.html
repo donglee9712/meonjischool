@@ -1,0 +1,417 @@
+<!-- 아임웹 HTML 위젯에 그대로 붙여넣기용 (HTML+CSS 한 번에) -->
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap");
+
+  .meonji-step-cards {
+    --text: #1b1b1b;
+    --muted: rgba(27, 27, 27, 0.72);
+    --card-radius: 28px;
+    --card-pad: 45px;
+    --card-gap: 20px;
+    --badge-size: 44px;
+    --arrow-size: 40px;
+    --shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 18px 36px rgba(0, 0, 0, 0.12);
+
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic";
+    color: var(--text);
+  }
+
+  .meonji-step-cards,
+  .meonji-step-cards *,
+  .meonji-step-cards *::before,
+  .meonji-step-cards *::after {
+    box-sizing: border-box;
+  }
+
+	  .meonji-step-cards__grid {
+	    width: 100%;
+	    display: grid;
+	    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	    gap: var(--card-gap);
+	    align-items: stretch;
+	    grid-auto-flow: row;
+	    padding-top: 9px;
+	  }
+
+  .meonji-step-card {
+    position: relative;
+    display: block;
+    padding: var(--card-pad);
+    border-radius: var(--card-radius);
+    text-decoration: none !important;
+    color: inherit !important;
+    box-shadow: var(--shadow);
+    transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+    min-height: 260px;
+    overflow: hidden;
+    isolation: isolate;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .meonji-step-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    filter: saturate(1.02);
+  }
+
+  .meonji-step-card:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow);
+  }
+
+  .meonji-step-card:focus-visible {
+    outline: 4px solid rgba(0, 0, 0, 0.2);
+    outline-offset: 6px;
+  }
+
+						  .meonji-step-card--beige {
+					    background: #f6f6f6;
+					    background-image:
+					      radial-gradient(120% 90% at 18% 0%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 62%),
+					      linear-gradient(to bottom right, #ffffff 0%, #f6f6f6 46%, #ededed 100%);
+						    border: 2px solid #e6e6e6;
+						    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.16);
+						    backdrop-filter: blur(14px) saturate(160%);
+						    -webkit-backdrop-filter: blur(14px) saturate(160%);
+						  }
+
+							  .meonji-step-card--orange {
+						    background: #f6f6f6;
+						    background-image:
+						      radial-gradient(120% 90% at 18% 0%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 62%),
+						      linear-gradient(to bottom right, #ffffff 0%, #f6f6f6 46%, #ededed 100%);
+				    border: 2px solid #e6e6e6;
+				    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.16);
+				    backdrop-filter: blur(14px) saturate(160%);
+				    -webkit-backdrop-filter: blur(14px) saturate(160%);
+				  }
+
+  .meonji-step-card--lime {
+    background: #c7e57b;
+  }
+
+  .meonji-step-card--sky {
+    background: #cfe4ff;
+  }
+
+  .meonji-step-card__badge {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: var(--badge-size);
+    height: var(--badge-size);
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    background: #1e1e1e;
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* 오타/변형 클래스 대응 */
+  span.meonji-step-card_badge {
+    background: #1e1e1e;
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
+  }
+
+  .meonji-step-card__arrow {
+    position: absolute;
+    top: 35px;
+    right: 35px;
+    width: var(--arrow-size);
+    height: var(--arrow-size);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0, 0, 0, 0.85);
+  }
+
+  .meonji-step-card__arrow svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .meonji-step-card__title {
+    margin: 0 0 12px;
+    position: relative;
+    z-index: 1;
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    word-break: keep-all;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+		  .meonji-step-card__content {
+		    position: relative;
+		    z-index: 1;
+		    margin-top: 76px;
+		    mix-blend-mode: normal !important;
+		    filter: none !important;
+		  }
+
+  .meonji-step-card__desc {
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    color: var(--muted) !important;
+    -webkit-text-fill-color: var(--muted) !important;
+    word-break: keep-all;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .meonji-step-card__desc * {
+    color: inherit !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+
+	  .meonji-step-card__desc p {
+	    margin: 0 0 10px;
+	  }
+
+	  .meonji-step-card__desc p.meonji-step-card__parking-title {
+	    margin: 12px 0 10px;
+	    font-weight: 700;
+	    color: var(--text) !important;
+	    -webkit-text-fill-color: var(--text) !important;
+	    text-shadow: 0 0 0 var(--text);
+	  }
+
+		  .meonji-step-card__desc p.meonji-step-card__parking-title--spacer {
+		    margin-top: 30px;
+		  }
+
+		  .meonji-step-card__desc p.meonji-step-card__strong {
+		    font-weight: 700;
+		    color: var(--text) !important;
+		    -webkit-text-fill-color: var(--text) !important;
+		    text-shadow: 0 0 0 var(--text);
+		  }
+
+		  .meonji-step-card__desc p:last-child {
+		    margin-bottom: 0;
+		  }
+
+	  @media (max-width: 600px) {
+	    .meonji-step-cards {
+	      --card-pad: 22px;
+	      --card-gap: 16px;
+	      --card-radius: 24px;
+	    }
+
+		    .meonji-step-cards__grid {
+		      grid-template-columns: 1fr;
+		      grid-auto-flow: row;
+		    }
+
+		    .meonji-step-card__badge {
+		      top: 18px;
+		      left: 18px;
+		    }
+
+		    .meonji-step-card__arrow {
+		      top: 18px;
+		      right: 18px;
+		    }
+
+		    .meonji-step-card.meonji-step-card--beige {
+		      margin-top: 9px;
+		    }
+
+		    .meonji-step-card {
+		      min-height: auto;
+		    }
+
+	  /* 모바일/그리드 환경에서 번호 순서 유지 */
+	  .meonji-step-card[aria-label^="01."] {
+	    order: 1;
+	  }
+
+	  .meonji-step-card[aria-label^="02."] {
+	    order: 2;
+	  }
+
+    .meonji-step-card__title {
+      font-size: 26px;
+    }
+  }
+</style>
+
+	<div class="meonji-step-cards" aria-label="카드 안내 섹션">
+	  <div class="meonji-step-cards__grid">
+	    <!-- 링크가 필요하면 meonji-step-card를 <a>로 감싸고 href를 넣어주세요 -->
+	    <div
+	      class="meonji-step-card meonji-step-card--beige"
+	      aria-label="01. 주소"
+	      data-title="주소"
+	      data-desc="서울 강남구 테헤란로8길 25, 3층, 플랩자산연구소|(강남역 1번 출구에서 걸어서 5분거리에 위치)"
+	    >
+      <span class="meonji-step-card__badge">01</span>
+      <span class="meonji-step-card__arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+	            d="M20 6L9 17l-5-5"
+            stroke="currentColor"
+            stroke-width="2.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+      <div class="meonji-step-card__content">
+        <div
+          class="meonji-step-card__title"
+          style="color:#1b1b1b !important;-webkit-text-fill-color:#1b1b1b !important;text-shadow:0 0 0 #1b1b1b;"
+        >
+          주소
+        </div>
+	        <div
+	          class="meonji-step-card__desc"
+	          style="color:rgba(27,27,27,.72) !important;-webkit-text-fill-color:rgba(27,27,27,.72) !important;text-shadow:0 0 0 rgba(27,27,27,.72);"
+	        >
+	          <p class="meonji-step-card__strong">서울 강남구 테헤란로8길 25, 3층, 플랩자산연구소</p>
+	          <p>(강남역 1번 출구에서 걸어서 5분거리에 위치)</p>
+	        </div>
+      </div>
+	    </div>
+
+			    <div
+			      class="meonji-step-card meonji-step-card--orange"
+			      aria-label="02. 주차"
+			      data-title="주차"
+			      data-desc="해당 건물에 주차가 어려워 가까운 주차장을 안내드립니다.|1. 나이스파크 삼원타워 주차장 (강의장까지 걸어서 3분)|주소: 서울 강남구 테헤란로 124|가격: 휴일 당일권 9,000원|2. 하이파킹 한국지식재산센터 주차장 (강의장까지 걸어서 7분)|주소: 서울 강남구 테헤란로 131|가격: 휴일 당일권 4,300원|※ 가급적 대중교통을 이용하여 주시기 바랍니다."
+			    >
+      <span class="meonji-step-card__badge">02</span>
+      <span class="meonji-step-card__arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+	            d="M20 6L9 17l-5-5"
+            stroke="currentColor"
+            stroke-width="2.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+      <div class="meonji-step-card__content">
+        <div
+          class="meonji-step-card__title"
+          style="color:#1b1b1b !important;-webkit-text-fill-color:#1b1b1b !important;text-shadow:0 0 0 #1b1b1b;"
+        >
+          주차
+        </div>
+	        <div
+	          class="meonji-step-card__desc"
+	          style="color:rgba(27,27,27,.72) !important;-webkit-text-fill-color:rgba(27,27,27,.72) !important;text-shadow:0 0 0 rgba(27,27,27,.72);"
+	        >
+	          <p class="meonji-step-card__strong">해당 건물에 주차가 어려워 가까운 주차장을 안내드립니다.</p>
+	          <p class="meonji-step-card__parking-title meonji-step-card__parking-title--spacer">
+	            1. 나이스파크 삼원타워 주차장 (강의장까지 걸어서 3분)
+	          </p>
+	          <p>주소: 서울 강남구 테헤란로 124</p>
+	          <p>가격: 휴일 당일권 9,000원</p>
+	          <p class="meonji-step-card__parking-title meonji-step-card__parking-title--spacer">
+	            2. 하이파킹 한국지식재산센터 주차장 (강의장까지 걸어서 7분)
+	          </p>
+	          <p>주소: 서울 강남구 테헤란로 131</p>
+	          <p>가격: 휴일 당일권 4,300원</p>
+	          <p>※ 가급적 대중교통을 이용하여 주시기 바랍니다.</p>
+	        </div>
+      </div>
+	    </div>
+
+	  </div>
+	</div>
+
+	<script>
+	  (function () {
+	    var root = document.querySelector(".meonji-step-cards");
+	    if (!root) return;
+
+	    var cards = root.querySelectorAll(".meonji-step-card");
+	    for (var i = 0; i < cards.length; i++) {
+	      var card = cards[i];
+	      var dataTitle = card.getAttribute("data-title") || "";
+	      var dataDesc = card.getAttribute("data-desc") || "";
+	      if (!dataTitle && !dataDesc) continue;
+
+	      var content = card.querySelector(".meonji-step-card__content");
+	      if (!content) {
+	        content = document.createElement("div");
+	        content.className = "meonji-step-card__content";
+	        card.appendChild(content);
+	      }
+
+	      var titleEl = content.querySelector(".meonji-step-card__title");
+	      if (!titleEl) {
+	        titleEl = document.createElement("div");
+	        titleEl.className = "meonji-step-card__title";
+	        content.insertBefore(titleEl, content.firstChild);
+	      }
+	      if (!titleEl.textContent || !titleEl.textContent.trim()) {
+	        titleEl.textContent = dataTitle;
+	      }
+
+	      var descEl = content.querySelector(".meonji-step-card__desc");
+	      if (!descEl) {
+	        descEl = document.createElement("div");
+	        descEl.className = "meonji-step-card__desc";
+	        content.appendChild(descEl);
+	      }
+
+	      var hasMeaningfulText =
+	        (descEl.textContent && descEl.textContent.trim().length > 0) ||
+	        descEl.querySelector("p");
+		      if (!hasMeaningfulText) {
+		        var parts = dataDesc ? dataDesc.split("|") : [];
+		        var html = "";
+		        for (var p = 0; p < parts.length; p++) {
+		          var t = parts[p].trim();
+		          if (!t) continue;
+		          html += "<p>" + t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</p>";
+		        }
+		        descEl.innerHTML = html || "<p></p>";
+		      }
+
+			      var paragraphs = descEl.querySelectorAll("p");
+				      for (var k = 0; k < paragraphs.length; k++) {
+				        var text = (paragraphs[k].textContent || "").trim();
+				        if (text === "서울 강남구 테헤란로8길 25, 3층, 플랩자산연구소") {
+				          paragraphs[k].classList.add("meonji-step-card__strong");
+				        }
+				        if (text === "해당 건물에 주차가 어려워 가까운 주차장을 안내드립니다.") {
+				          paragraphs[k].classList.add("meonji-step-card__strong");
+				        }
+				        if (/^[12]\./.test(text) && /주차장/.test(text)) {
+				          paragraphs[k].classList.add("meonji-step-card__parking-title");
+				          if (/^(1|2)\./.test(text)) {
+				            paragraphs[k].classList.add("meonji-step-card__parking-title--spacer");
+				          }
+				        }
+				      }
+		    }
+		  })();
+		</script>

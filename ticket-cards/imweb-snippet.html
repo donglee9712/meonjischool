@@ -1,0 +1,448 @@
+<!-- 아임웹 HTML 위젯에 그대로 붙여넣기용 (HTML+CSS 한 번에) -->
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap");
+
+  /* 아임웹/테마 CSS가 텍스트를 숨기는 경우가 있어, 루트에서 상속 스타일을 초기화합니다 */
+  .meonji-ticket-grid {
+    all: initial;
+    --bg: transparent;
+    --text: #121212;
+    --muted: rgba(18, 18, 18, 0.72);
+    --card-radius: 26px;
+    --card-pad: 28px;
+    --gap: 18px;
+    --stroke: rgba(0, 0, 0, 0.14);
+    --accent: #ff7a00;
+    --dark: #0e2f1d;
+    --btn-bg: #0e2f1d;
+    --btn-text: #ffffff;
+
+    display: block;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic";
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+    text-shadow: 0 0 0 var(--text);
+    mix-blend-mode: normal !important;
+    filter: none !important;
+  }
+
+  .meonji-ticket-grid,
+  .meonji-ticket-grid *,
+  .meonji-ticket-grid *::before,
+  .meonji-ticket-grid *::after {
+    box-sizing: border-box;
+  }
+
+  .meonji-ticket-grid__wrap {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--gap);
+    align-items: stretch;
+  }
+
+  .meonji-ticket-card {
+    --card-bg: #d9e7c7;
+    --card-text: #121212;
+    --card-muted: rgba(18, 18, 18, 0.72);
+    --card-btn-bg: var(--btn-bg);
+    --card-btn-text: var(--btn-text);
+
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: var(--card-pad);
+    border-radius: var(--card-radius);
+    background: var(--card-bg);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    mix-blend-mode: normal !important;
+    filter: none !important;
+  }
+
+  /* 티켓 노치 */
+  .meonji-ticket-card::before,
+  .meonji-ticket-card::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    transform: translateY(-50%);
+    background: var(--bg);
+    box-shadow: 0 0 0 1px var(--stroke) inset;
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .meonji-ticket-card::before {
+    left: -13px;
+  }
+
+  .meonji-ticket-card::after {
+    right: -13px;
+  }
+
+  /* 텍스트가 투명 처리되는 테마 대비 */
+  .meonji-ticket-card,
+  .meonji-ticket-card * {
+    color: var(--card-text) !important;
+    -webkit-text-fill-color: currentColor !important;
+    text-shadow: 0 0 0 currentColor;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .meonji-ticket-card__icon {
+    width: 34px;
+    height: 34px;
+    opacity: 0.9;
+    z-index: 2;
+  }
+
+  .meonji-ticket-card__icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .meonji-ticket-card__title {
+    z-index: 2;
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .meonji-ticket-card__desc {
+    z-index: 2;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    color: var(--card-muted) !important;
+    -webkit-text-fill-color: var(--card-muted) !important;
+    text-shadow: 0 0 0 var(--card-muted);
+  }
+
+  .meonji-ticket-card__price {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .meonji-ticket-card__price-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .meonji-ticket-card__label {
+    font-weight: 700;
+    font-size: 13px;
+    opacity: 0.9;
+  }
+
+  .meonji-ticket-card__old {
+    position: relative;
+    font-weight: 900;
+    font-size: 26px;
+    opacity: 0.9;
+  }
+
+  .meonji-ticket-card__old svg {
+    position: absolute;
+    left: -6px;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-6deg);
+    height: 22px;
+    width: calc(100% + 12px);
+    pointer-events: none;
+  }
+
+  .meonji-ticket-card__new {
+    font-weight: 900;
+    font-size: 44px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .meonji-ticket-card__cta {
+    margin-top: auto;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: var(--card-btn-bg);
+    color: var(--card-btn-text) !important;
+    -webkit-text-fill-color: var(--card-btn-text) !important;
+    text-shadow: 0 0 0 var(--card-btn-text);
+    text-decoration: none !important;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    border: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .meonji-ticket-card__badge {
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    z-index: 3;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: var(--accent);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-shadow: 0 0 0 #fff;
+    font-weight: 900;
+    line-height: 1;
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.22);
+  }
+
+  .meonji-ticket-card__badge-big {
+    font-size: 30px;
+    letter-spacing: -0.03em;
+  }
+
+  .meonji-ticket-card__badge-small {
+    display: block;
+    font-size: 12px;
+    opacity: 0.92;
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .meonji-ticket-card__globe {
+    position: absolute;
+    right: -24px;
+    bottom: -24px;
+    width: 160px;
+    height: 160px;
+    opacity: 0.9;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .meonji-ticket-card__globe path,
+  .meonji-ticket-card__globe circle,
+  .meonji-ticket-card__globe ellipse {
+    stroke: var(--accent);
+    stroke-width: 2;
+    fill: none;
+  }
+
+  .meonji-ticket-card--dark {
+    --card-bg: var(--dark);
+    --card-text: #ffffff;
+    --card-muted: rgba(255, 255, 255, 0.78);
+    --card-btn-bg: #e8f2d6;
+    --card-btn-text: var(--dark);
+    --stroke: rgba(255, 255, 255, 0.18);
+  }
+
+  @media (max-width: 1023px) {
+    .meonji-ticket-grid__wrap {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .meonji-ticket-grid {
+      --card-pad: 22px;
+      --card-radius: 22px;
+      --gap: 14px;
+    }
+
+    .meonji-ticket-grid__wrap {
+      grid-template-columns: 1fr;
+    }
+
+    .meonji-ticket-card__title {
+      font-size: 28px;
+    }
+
+    .meonji-ticket-card__new {
+      font-size: 40px;
+    }
+
+    .meonji-ticket-card__globe {
+      width: 140px;
+      height: 140px;
+    }
+  }
+</style>
+
+<div class="meonji-ticket-grid" aria-label="티켓형 카드 섹션">
+  <div class="meonji-ticket-grid__wrap">
+    <div class="meonji-ticket-card meonji-ticket-card--dark">
+      <div class="meonji-ticket-card__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+            d="M8 3h8M9 3v3m6-3v3M6 7h12v14H6V7Z"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M8 11h8M8 15h6"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+
+      <div class="meonji-ticket-card__title">얼리버드 수강권</div>
+      <div class="meonji-ticket-card__desc">
+        2번 이미지의 티켓 느낌(할인 뱃지/스크래치/글로브 라인아트)을 카드 구성에 적용했습니다.
+      </div>
+
+      <div class="meonji-ticket-card__price">
+        <div class="meonji-ticket-card__price-top">
+          <div class="meonji-ticket-card__label">정가</div>
+          <div class="meonji-ticket-card__old">
+            88,000원
+            <svg viewBox="0 0 120 24" preserveAspectRatio="none" aria-hidden="true">
+              <path
+                d="M5 18C26 10 44 14 58 10C72 6 88 8 115 4"
+                stroke="#ff7a00"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+              <path
+                d="M6 20C28 12 44 18 60 14C76 10 92 12 114 7"
+                stroke="#ff7a00"
+                stroke-width="4"
+                stroke-linecap="round"
+                opacity="0.85"
+              />
+            </svg>
+          </div>
+        </div>
+        <div class="meonji-ticket-card__new">66,000원</div>
+      </div>
+
+      <a class="meonji-ticket-card__cta" href="#">신청하기</a>
+
+      <div class="meonji-ticket-card__badge" aria-label="25% 할인">
+        <span class="meonji-ticket-card__badge-big">25%</span>
+        <span class="meonji-ticket-card__badge-small">OFF</span>
+      </div>
+
+      <svg class="meonji-ticket-card__globe" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="120" cy="120" r="70" />
+        <ellipse cx="120" cy="120" rx="70" ry="26" />
+        <ellipse cx="120" cy="120" rx="26" ry="70" />
+        <path d="M50 120h140" />
+        <path d="M120 50v140" />
+      </svg>
+    </div>
+
+    <div class="meonji-ticket-card">
+      <div class="meonji-ticket-card__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 21s7-4.5 7-11a4 4 0 0 0-7-2.5A4 4 0 0 0 5 10c0 6.5 7 11 7 11Z"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+      <div class="meonji-ticket-card__title">카드 제목 2</div>
+      <div class="meonji-ticket-card__desc">설명 문장을 여기에 입력하세요.</div>
+      <a class="meonji-ticket-card__cta" href="#">자세히 보기</a>
+      <svg class="meonji-ticket-card__globe" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="120" cy="120" r="70" />
+        <ellipse cx="120" cy="120" rx="70" ry="26" />
+        <ellipse cx="120" cy="120" rx="26" ry="70" />
+        <path d="M50 120h140" />
+        <path d="M120 50v140" />
+      </svg>
+    </div>
+
+    <div class="meonji-ticket-card">
+      <div class="meonji-ticket-card__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+            d="M7 17l4 2 6-10"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z"
+            stroke="currentColor"
+            stroke-width="1.8"
+          />
+        </svg>
+      </div>
+      <div class="meonji-ticket-card__title">카드 제목 3</div>
+      <div class="meonji-ticket-card__desc">설명 문장을 여기에 입력하세요.</div>
+      <a class="meonji-ticket-card__cta" href="#">자세히 보기</a>
+      <svg class="meonji-ticket-card__globe" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="120" cy="120" r="70" />
+        <ellipse cx="120" cy="120" rx="70" ry="26" />
+        <ellipse cx="120" cy="120" rx="26" ry="70" />
+        <path d="M50 120h140" />
+        <path d="M120 50v140" />
+      </svg>
+    </div>
+
+    <div class="meonji-ticket-card">
+      <div class="meonji-ticket-card__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path
+            d="M4 7h16v10H4V7Z"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M7 12h10"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+          <path
+            d="M8 5h8"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+      <div class="meonji-ticket-card__title">카드 제목 4</div>
+      <div class="meonji-ticket-card__desc">설명 문장을 여기에 입력하세요.</div>
+      <a class="meonji-ticket-card__cta" href="#">자세히 보기</a>
+      <svg class="meonji-ticket-card__globe" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="120" cy="120" r="70" />
+        <ellipse cx="120" cy="120" rx="70" ry="26" />
+        <ellipse cx="120" cy="120" rx="26" ry="70" />
+        <path d="M50 120h140" />
+        <path d="M120 50v140" />
+      </svg>
+    </div>
+  </div>
+</div>
+

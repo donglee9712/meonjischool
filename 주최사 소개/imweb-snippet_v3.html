@@ -1,0 +1,256 @@
+<!-- 아임웹 HTML 위젯에 그대로 붙여넣기용 (HTML+CSS 한 번에) -->
+<style>
+  .meonji-switch-hero {
+    --bg: #0b0c10;
+    --text: rgba(255, 255, 255, 0.92);
+    --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 46px 24px 60px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    isolation: isolate;
+    min-height: 620px;
+    display: grid;
+    grid-template-rows: 1fr;
+    align-items: end;
+  }
+
+  .meonji-switch-hero,
+  .meonji-switch-hero *,
+  .meonji-switch-hero *::before,
+  .meonji-switch-hero *::after {
+    box-sizing: border-box;
+  }
+
+  /* 배경: 그리드 + 비네팅 + 은은한 글로우 */
+  .meonji-switch-hero::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    background:
+      radial-gradient(800px 500px at 50% 10%, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0) 62%),
+      radial-gradient(520px 380px at 20% 42%, rgba(0, 160, 255, 0.12), rgba(0, 160, 255, 0) 66%),
+      radial-gradient(520px 380px at 80% 45%, rgba(255, 140, 0, 0.10), rgba(255, 140, 0, 0) 68%),
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: auto, auto, auto, 54px 54px, 54px 54px;
+    background-position: center, center, center, center, center;
+    opacity: 0.9;
+    z-index: 0;
+  }
+
+  .meonji-switch-hero::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background:
+      radial-gradient(70% 60% at 50% 0%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 72%),
+      radial-gradient(60% 55% at 50% 100%, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.78) 70%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* 하단 카드 스택 */
+  .meonji-switch-hero__cards {
+    position: relative;
+    z-index: 2;
+    margin: 0 auto;
+    width: min(100%, 980px);
+    height: 420px;
+    display: grid;
+    place-items: end center;
+  }
+
+  .meonji-switch-hero__cards::before {
+    content: "";
+    position: absolute;
+    bottom: -160px;
+    left: 50%;
+    width: 980px;
+    height: 340px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: radial-gradient(circle at 50% 35%, rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.62) 70%);
+    filter: blur(2px);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .meonji-game-card {
+    --card-bg-a: rgba(255, 255, 255, 0.16);
+    --card-bg-b: rgba(255, 255, 255, 0.06);
+    --card-tilt: 0deg;
+    --card-x: 0px;
+    --card-y: 0%;
+    --card-z: 1;
+
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform:
+      translateX(-50%)
+      translateX(var(--card-x))
+      translateY(var(--card-y))
+      rotate(var(--card-tilt));
+    z-index: var(--card-z);
+    width: min(280px, 34vw);
+    aspect-ratio: 3 / 4;
+    border-radius: 34px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: var(--shadow);
+    background:
+      radial-gradient(120% 100% at 20% 10%, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 58%),
+      linear-gradient(to bottom right, var(--card-bg-a), var(--card-bg-b));
+    position: relative;
+  }
+
+  .meonji-game-card::before {
+    content: "";
+    position: absolute;
+    inset: 18px;
+    border-radius: 26px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background:
+      radial-gradient(120% 90% at 20% 20%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 62%),
+      linear-gradient(to bottom right, rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.25));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    pointer-events: none;
+  }
+
+  /* 카드 위치(5장 겹침) */
+  .meonji-game-card--far-left {
+    --card-x: -360px;
+    --card-y: 70%;
+    --card-tilt: -12deg;
+    --card-z: 1;
+  }
+
+  .meonji-game-card--left {
+    --card-x: -190px;
+    --card-tilt: -8deg;
+    --card-z: 2;
+  }
+
+  .meonji-game-card--center {
+    --card-x: 0px;
+    --card-tilt: 0deg;
+    --card-z: 4;
+    width: min(320px, 40vw);
+  }
+
+  .meonji-game-card--right {
+    --card-x: 190px;
+    --card-tilt: 8deg;
+    --card-z: 2;
+  }
+
+  .meonji-game-card--far-right {
+    --card-x: 360px;
+    --card-y: 70%;
+    --card-tilt: 12deg;
+    --card-z: 1;
+  }
+
+  /* 각 카드 색감(이미지는 사용자가 교체) */
+  .meonji-game-card--purple {
+    --card-bg-a: rgba(140, 95, 255, 0.55);
+    --card-bg-b: rgba(45, 60, 255, 0.18);
+  }
+
+  .meonji-game-card--red {
+    --card-bg-a: rgba(255, 90, 90, 0.58);
+    --card-bg-b: rgba(255, 95, 70, 0.18);
+  }
+
+  .meonji-game-card--blue {
+    --card-bg-a: rgba(90, 190, 255, 0.60);
+    --card-bg-b: rgba(70, 110, 255, 0.20);
+  }
+
+  .meonji-game-card--green {
+    --card-bg-a: rgba(60, 230, 190, 0.56);
+    --card-bg-b: rgba(40, 170, 210, 0.18);
+  }
+
+  .meonji-game-card--indigo {
+    --card-bg-a: rgba(70, 110, 255, 0.56);
+    --card-bg-b: rgba(90, 60, 255, 0.18);
+  }
+
+  @media (max-width: 980px) {
+    .meonji-switch-hero { min-height: 600px; }
+
+    .meonji-switch-hero__cards {
+      height: 390px;
+    }
+
+    .meonji-game-card--far-left {
+      --card-x: -280px;
+    }
+
+    .meonji-game-card--far-right {
+      --card-x: 280px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .meonji-switch-hero {
+      padding: 34px 16px 44px;
+      border-radius: 22px;
+      min-height: 560px;
+    }
+
+    .meonji-switch-hero__cards {
+      height: 360px;
+    }
+
+    .meonji-game-card {
+      width: 220px;
+      border-radius: 30px;
+    }
+
+    .meonji-game-card--far-left,
+    .meonji-game-card--far-right {
+      display: none;
+    }
+
+    .meonji-game-card--left {
+      --card-x: -140px;
+    }
+
+    .meonji-game-card--right {
+      --card-x: 140px;
+    }
+
+    .meonji-game-card--center {
+      width: 250px;
+    }
+  }
+</style>
+
+<section class="meonji-switch-hero" aria-label="게임 카드 히어로 섹션">
+  <div class="meonji-switch-hero__cards" aria-label="게임 카드 목록">
+    <article class="meonji-game-card meonji-game-card--purple meonji-game-card--far-left" aria-label="Game card 1">
+    </article>
+
+    <article class="meonji-game-card meonji-game-card--red meonji-game-card--left" aria-label="Game card 2">
+    </article>
+
+    <article class="meonji-game-card meonji-game-card--blue meonji-game-card--center" aria-label="Game card 3">
+    </article>
+
+    <article class="meonji-game-card meonji-game-card--green meonji-game-card--right" aria-label="Game card 4">
+    </article>
+
+    <article class="meonji-game-card meonji-game-card--indigo meonji-game-card--far-right" aria-label="Game card 5">
+    </article>
+  </div>
+</section>
