@@ -1,0 +1,129 @@
+:root {
+  --btn-grad-start: #ff7f00;
+  --btn-grad-end: #ff6e00;
+
+  --btn-scale: 1;
+  --btn-scale-x: 1;
+  --btn-scale-y: 1;
+  --btn-w-max: 576px;
+  --btn-w-vw: 73.6vw;
+
+  --btn-h-min: 92px;
+  --btn-h-mid: 18vw;
+  --btn-h-max: 160px;
+
+  --btn-font-min: 34px;
+  --btn-font-mid: 9vw;
+  --btn-font-max: 88px;
+
+  --btn-radius-min: 44px;
+  --btn-radius-mid: 6vw;
+  --btn-radius-max: 80px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue",
+    Arial, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  background: #f6f6f6;
+  display: grid;
+  place-items: center;
+}
+
+.apply-btn {
+  width: min(
+    calc(var(--btn-w-max) * (var(--btn-scale) * var(--btn-scale-x))),
+    calc(var(--btn-w-vw) * (var(--btn-scale) * var(--btn-scale-x)))
+  );
+  height: clamp(
+    calc(var(--btn-h-min) * (var(--btn-scale) * var(--btn-scale-y))),
+    calc(var(--btn-h-mid) * (var(--btn-scale) * var(--btn-scale-y))),
+    calc(var(--btn-h-max) * (var(--btn-scale) * var(--btn-scale-y)))
+  );
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(180deg, var(--btn-grad-start) 0%, var(--btn-grad-end) 100%);
+  border-radius: clamp(
+    calc(var(--btn-radius-min) * var(--btn-scale)),
+    calc(var(--btn-radius-mid) * var(--btn-scale)),
+    calc(var(--btn-radius-max) * var(--btn-scale))
+  );
+  color: #ffffff;
+  text-decoration: none;
+
+  font-weight: 900;
+  font-size: clamp(
+    calc(var(--btn-font-min) * var(--btn-scale)),
+    calc(var(--btn-font-mid) * var(--btn-scale)),
+    calc(var(--btn-font-max) * var(--btn-scale))
+  );
+  letter-spacing: -0.02em;
+  line-height: 1;
+
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.18);
+  transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 600px) {
+  .apply-btn {
+    --btn-scale: 0.8;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1023px) {
+  .apply-btn {
+    --btn-scale: 0.64;
+    --btn-scale-x: 0.648;
+    --btn-scale-y: 1.05;
+  }
+}
+
+@media (min-width: 1024px) {
+  .apply-btn {
+    --btn-scale: 0.8;
+    --btn-scale-x: 0.648;
+    --btn-scale-y: 1.05;
+
+    --btn-h-min: 100px;
+    --btn-h-mid: 100px;
+    --btn-h-max: 100px;
+
+    --btn-font-min: 56px;
+    --btn-font-mid: 56px;
+    --btn-font-max: 56px;
+
+    --btn-radius-min: 32px;
+    --btn-radius-mid: 32px;
+    --btn-radius-max: 32px;
+  }
+}
+
+.apply-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 34px rgba(0, 0, 0, 0.2);
+  filter: saturate(1.05);
+}
+
+.apply-btn:active {
+  transform: translateY(0px) scale(0.995);
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.18);
+}
+
+.apply-btn:focus-visible {
+  outline: 4px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 6px;
+}
