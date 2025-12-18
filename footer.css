@@ -141,7 +141,7 @@ a {
 
 .logo-1986 img,
 .sm-ent-logo img {
-  width: 188px;
+  width: 197px;
   height: auto;
   display: block;
 }
@@ -150,7 +150,7 @@ a {
 .social-links {
   display: flex;
   gap: 25.5px;
-  margin-top: 115px;
+  margin-top: 127px;
 }
 
 .social-links a {
@@ -443,7 +443,7 @@ body.modal-open {
 
   .logo-1986 img,
   .sm-ent-logo img {
-    width: 138px;
+    width: 145px;
   }
 
   .logo-column,
@@ -456,7 +456,7 @@ body.modal-open {
   }
 
   .social-links {
-    margin-top: 30px;
+    margin-top: 33px;
     gap: 30px;
   }
 
@@ -509,7 +509,7 @@ body.modal-open {
 
   .social-links {
     gap: 15px;
-    margin-top: 30px;
+    margin-top: 33px;
   }
 
   .footer-menu .menu {
