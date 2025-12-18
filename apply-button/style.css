@@ -1,4 +1,6 @@
-.apply-button-page {
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@900&display=swap");
+
+:where(.apply-button-page, .meonji-apply) {
   --btn-grad-start: #ff7f00;
   --btn-grad-end: #ff6e00;
 
@@ -19,25 +21,29 @@
   --btn-radius-min: 44px;
   --btn-radius-mid: 6vw;
   --btn-radius-max: 80px;
-
-  margin: 0;
-  font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue",
-    Arial, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  background: #f6f6f6;
-
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
 }
 
-.apply-button-page,
-.apply-button-page *,
-.apply-button-page *::before,
-.apply-button-page *::after {
+:where(.apply-button-page, .meonji-apply),
+:where(.apply-button-page, .meonji-apply) *,
+:where(.apply-button-page, .meonji-apply) *::before,
+:where(.apply-button-page, .meonji-apply) *::after {
   box-sizing: border-box;
 }
 
-.apply-button-page .apply-btn {
+:where(.apply-button-page, .meonji-apply) {
+  font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue",
+    Arial, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+
+/* 아임웹에서는 섹션/위젯 컨테이너 안에 들어가므로 레이아웃은 래퍼에서 처리 */
+.meonji-apply {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+:where(.apply-button-page .apply-btn, .meonji-apply__btn) {
   width: min(
     calc(var(--btn-w-max) * (var(--btn-scale) * var(--btn-scale-x))),
     calc(var(--btn-w-vw) * (var(--btn-scale) * var(--btn-scale-x)))
@@ -51,14 +57,20 @@
   align-items: center;
   justify-content: center;
 
-  background: linear-gradient(180deg, var(--btn-grad-start) 0%, var(--btn-grad-end) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--btn-grad-start) 0%,
+    var(--btn-grad-end) 100%
+  ) !important;
   border-radius: clamp(
     calc(var(--btn-radius-min) * var(--btn-scale)),
     calc(var(--btn-radius-mid) * var(--btn-scale)),
     calc(var(--btn-radius-max) * var(--btn-scale))
   );
-  color: #ffffff;
-  text-decoration: none;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  border: 0 !important;
+  cursor: pointer;
 
   font-weight: 900;
   font-size: clamp(
@@ -67,7 +79,7 @@
     calc(var(--btn-font-max) * var(--btn-scale))
   );
   letter-spacing: -0.02em;
-  line-height: 1;
+  line-height: 1 !important;
 
   box-shadow: 0 16px 28px rgba(0, 0, 0, 0.18);
   transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
@@ -75,13 +87,13 @@
 }
 
 @media (max-width: 600px) {
-  .apply-button-page .apply-btn {
+  :where(.apply-button-page .apply-btn, .meonji-apply__btn) {
     --btn-scale: 0.8;
   }
 }
 
 @media (min-width: 601px) and (max-width: 1023px) {
-  .apply-button-page .apply-btn {
+  :where(.apply-button-page .apply-btn, .meonji-apply__btn) {
     --btn-scale: 0.64;
     --btn-scale-x: 0.648;
     --btn-scale-y: 1.05;
@@ -89,7 +101,7 @@
 }
 
 @media (min-width: 1024px) {
-  .apply-button-page .apply-btn {
+  :where(.apply-button-page .apply-btn, .meonji-apply__btn) {
     --btn-scale: 0.8;
     --btn-scale-x: 0.648;
     --btn-scale-y: 1.05;
@@ -108,18 +120,18 @@
   }
 }
 
-.apply-button-page .apply-btn:hover {
+:where(.apply-button-page .apply-btn, .meonji-apply__btn):hover {
   transform: translateY(-2px);
   box-shadow: 0 20px 34px rgba(0, 0, 0, 0.2);
   filter: saturate(1.05);
 }
 
-.apply-button-page .apply-btn:active {
+:where(.apply-button-page .apply-btn, .meonji-apply__btn):active {
   transform: translateY(0px) scale(0.995);
   box-shadow: 0 14px 24px rgba(0, 0, 0, 0.18);
 }
 
-.apply-button-page .apply-btn:focus-visible {
+:where(.apply-button-page .apply-btn, .meonji-apply__btn):focus-visible {
   outline: 4px solid rgba(255, 255, 255, 0.9);
   outline-offset: 6px;
 }
