@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Curriculum cards preview</title>
+  </head>
+  <body>
+    <!-- 아래 내용은 imweb-snippet.html과 동일합니다 -->
+    <!-- 아임웹 HTML 위젯에 그대로 붙여넣기용 (HTML+CSS 한 번에) -->
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .c-p {
+        --tile-bg: #f5f5f6;
+        --tile-stroke: rgba(30, 30, 30, 0.14);
+        --tile-stroke-strong: rgba(30, 30, 30, 0.2);
+        --tile-shadow: 0 30px 70px rgba(0, 0, 0, 0.12);
+        --radius: clamp(22px, 2.2vw, 36px);
+        --gap: clamp(14px, 1.6vw, 22px);
+        --pad: clamp(18px, 2.2vw, 32px);
+        --muted: #000000;
+        --text: #000000;
+        --stagger: 180ms;
+        --anim-speed: 441ms;
+
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        color: var(--text);
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: var(--gap);
+        align-items: stretch;
+        padding: var(--gap) 0;
+        overflow: visible;
+        min-width: 320px;
+      }
+
+      .c-p,
+      .c-p *,
+      .c-p *::before,
+      .c-p *::after {
+        box-sizing: border-box;
+      }
+
+      .c-p + .c-p {
+        margin-top: calc(var(--gap) * 2);
+      }
+
+      .c-p--s {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        align-items: stretch;
+      }
+
+      .c-p--s .c-i {
+        min-width: 0;
+      }
+
+      .c-i {
+        position: relative;
+        display: block;
+        align-self: stretch;
+        padding: var(--pad);
+        border-radius: var(--radius);
+        text-decoration: none !important;
+        color: inherit !important;
+        overflow: hidden;
+        background: var(--tile-bg);
+        border: 1px solid var(--tile-stroke);
+        box-shadow: var(--tile-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(10px) saturate(130%);
+        -webkit-backdrop-filter: blur(10px) saturate(130%);
+        transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+        isolation: isolate;
+        opacity: 0;
+        transform: translateY(38px);
+        animation: none;
+      }
+
+      .c-i.is-visible {
+        animation: meonjiRiseUp var(--anim-speed, 441ms) ease-out both;
+      }
+
+      .c-i.is-visible:nth-of-type(1) { animation-delay: 0ms; }
+      .c-i.is-visible:nth-of-type(2) { animation-delay: calc(var(--stagger) * 1); }
+      .c-i.is-visible:nth-of-type(3) { animation-delay: calc(var(--stagger) * 2); }
+      .c-i.is-visible:nth-of-type(4) { animation-delay: calc(var(--stagger) * 3); }
+      .c-i.is-visible:nth-of-type(5) { animation-delay: calc(var(--stagger) * 4); }
+      .c-i.is-visible:nth-of-type(6) { animation-delay: calc(var(--stagger) * 5); }
+      .c-i.is-visible:nth-of-type(7) { animation-delay: calc(var(--stagger) * 6); }
+      .c-i.is-visible:nth-of-type(8) { animation-delay: calc(var(--stagger) * 7); }
+      .c-i.is-visible:nth-of-type(9) { animation-delay: calc(var(--stagger) * 8); }
+      .c-i.is-visible:nth-of-type(10) { animation-delay: calc(var(--stagger) * 9); }
+      .c-i.is-visible:nth-of-type(11) { animation-delay: calc(var(--stagger) * 10); }
+      .c-i.is-visible:nth-of-type(12) { animation-delay: calc(var(--stagger) * 11); }
+      .c-i.is-visible:nth-of-type(13) { animation-delay: calc(var(--stagger) * 12); }
+      .c-i.is-visible:nth-of-type(14) { animation-delay: calc(var(--stagger) * 13); }
+      .c-i.is-visible:nth-of-type(15) { animation-delay: calc(var(--stagger) * 14); }
+      .c-i.is-visible:nth-of-type(16) { animation-delay: calc(var(--stagger) * 15); }
+      .c-i.is-visible:nth-of-type(1) { --anim-speed: 465ms; }
+      .c-i.is-visible:nth-of-type(2) { --anim-speed: 429ms; }
+      .c-i.is-visible:nth-of-type(3) { --anim-speed: 502ms; }
+      .c-i.is-visible:nth-of-type(4) { --anim-speed: 453ms; }
+      .c-i.is-visible:nth-of-type(5) { --anim-speed: 526ms; }
+      .c-i.is-visible:nth-of-type(6) { --anim-speed: 478ms; }
+      .c-i.is-visible:nth-of-type(7) { --anim-speed: 550ms; }
+      .c-i.is-visible:nth-of-type(8) { --anim-speed: 502ms; }
+      .c-i.is-visible:nth-of-type(9) { --anim-speed: 465ms; }
+      .c-i.is-visible:nth-of-type(10) { --anim-speed: 429ms; }
+      .c-i.is-visible:nth-of-type(11) { --anim-speed: 502ms; }
+      .c-i.is-visible:nth-of-type(12) { --anim-speed: 453ms; }
+      .c-i.is-visible:nth-of-type(13) { --anim-speed: 526ms; }
+      .c-i.is-visible:nth-of-type(14) { --anim-speed: 478ms; }
+      .c-i.is-visible:nth-of-type(15) { --anim-speed: 550ms; }
+      .c-i.is-visible:nth-of-type(16) { --anim-speed: 502ms; }
+
+      @keyframes meonjiRiseUp {
+        from {
+          opacity: 0;
+          transform: translateY(44px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .c-i--s {
+        padding: calc(var(--pad) - 10px) var(--pad);
+      }
+
+      .c-i:hover {
+        transform: translateY(-2px);
+        border-color: var(--tile-stroke-strong);
+        filter: saturate(1.04);
+      }
+
+      .c-i:active {
+        transform: translateY(0);
+      }
+
+      .c-i:focus-visible {
+        outline: 4px solid rgba(0, 0, 0, 0.22);
+        outline-offset: 6px;
+      }
+
+      .c-i--a {
+        background: #ff7f00;
+        color: #ffffff;
+      }
+
+      .c-i--a .c-b,
+      .c-i--a .c-h,
+      .c-i--a .c-d {
+        color: #ffffff;
+      }
+
+      .c-i--a .c-ic {
+        background: #ffffff;
+        border-color: #ffffff;
+        color: #ff7f00;
+      }
+
+      .c-i--s {
+        color: #ff7f00;
+        background: #ffffff;
+      }
+
+      .c-i--s .c-b,
+      .c-i--s .c-h,
+      .c-i--s .c-d {
+        color: #ff7f00;
+      }
+
+      .c-i--s .c-ic {
+        background: #f5f5f6;
+        border-color: var(--tile-stroke);
+        color: #ff7f00;
+      }
+
+
+      .c-i:not(.c-i--a) .c-ic {
+        border-color: var(--tile-stroke);
+      }
+
+      .c-b {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.1;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        opacity: 0.8;
+      }
+
+      .c-h {
+        position: relative;
+        z-index: 1;
+        margin: 18px 0 0;
+        font-weight: 600;
+        letter-spacing: -0.04em;
+        line-height: 1.02;
+        font-size: clamp(30px, 3.5vw, 54px);
+      }
+
+      .c-d {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        line-height: 1.7;
+        letter-spacing: -0.01em;
+        color: var(--muted);
+        white-space: pre-line;
+      }
+
+      .c-ic {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        color: rgba(0, 0, 0, 0.55);
+        z-index: 2;
+      }
+
+      .c-ic svg {
+        width: 18px;
+        height: 18px;
+        display: block;
+      }
+
+      /* Curriculum (wide) cards: white background + keycolor border */
+      .c-i--w.c-i--o {
+        background: #ffffff;
+        color: #000000;
+        border-color: #ff7f00;
+      }
+
+      .c-i--w.c-i--o .c-b,
+      .c-i--w.c-i--o .c-h,
+      .c-i--w.c-i--o .c-d {
+        color: #000000;
+      }
+
+      .c-i--w.c-i--o .c-ic {
+        background: #f5f5f6;
+        border-color: var(--tile-stroke);
+        color: #ff7f00;
+      }
+
+      @media (max-width: 640px) {
+        .c-d {
+          font-size: 14px;
+        }
+
+        .c-p--s {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+
+    <div class="c-p c-p--s" aria-label="커리큘럼 안내 섹션">
+      <div class="c-i c-i--s" aria-label="라인업">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <circle cx="32" cy="20" r="14" />
+            <path d="M8 56c0-10.67 10.75-18 24-18s24 7.33 24 18" />
+          </svg>
+        </span>
+        <p class="c-b">Speaker</p>
+        <h4 class="c-h">기획자<br>윤명호</h4>
+        <p class="c-d"></p>
+      </div>
+
+      <div class="c-i c-i--w c-i--o" aria-label="커리큘럼">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <path d="M8 24h12l18-12v40L20 40H8Z" />
+            <path d="M50 24c3 2 3 10 0 12" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+          </svg>
+        </span>
+        <p class="c-b">curriculum</p>
+        <h4 class="c-h">커리큘럼</h4>
+        <p class="c-d">
+          <strong>Intro</strong>
+          <strong>기획자가 하는 일</strong>
+        </p>
+      </div>
+
+      <div class="c-i c-i--s" aria-label="라인업">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <circle cx="32" cy="20" r="14" />
+            <path d="M8 56c0-10.67 10.75-18 24-18s24 7.33 24 18" />
+          </svg>
+        </span>
+        <p class="c-b">Speaker</p>
+        <h4 class="c-h">기획자<br>윤명호</h4>
+        <p class="c-d"></p>
+      </div>
+
+      <div class="c-i c-i--w c-i--o" aria-label="커리큘럼">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <path d="M8 24h12l18-12v40L20 40H8Z" />
+            <path d="M50 24c3 2 3 10 0 12" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+          </svg>
+        </span>
+        <p class="c-b">curriculum</p>
+        <h4 class="c-h">커리큘럼</h4>
+        <p class="c-d">
+          <strong>Intro</strong>
+          <strong>기획자가 하는 일</strong>
+        </p>
+      </div>
+
+      <div class="c-i c-i--w c-i--o" aria-label="커리큘럼">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <path d="M8 24h12l18-12v40L20 40H8Z" />
+            <path d="M50 24c3 2 3 10 0 12" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+          </svg>
+        </span>
+        <p class="c-b">curriculum</p>
+        <h4 class="c-h">커리큘럼</h4>
+        <p class="c-d">
+          <strong>Intro</strong>
+          <strong>기획자가 하는 일</strong>
+        </p>
+      </div>
+
+      <div class="c-i c-i--s" aria-label="라인업">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <circle cx="32" cy="20" r="14" />
+            <path d="M8 56c0-10.67 10.75-18 24-18s24 7.33 24 18" />
+          </svg>
+        </span>
+        <p class="c-b">Speaker</p>
+        <h4 class="c-h">기획자<br>윤명호</h4>
+        <p class="c-d"></p>
+      </div>
+
+      <div class="c-i c-i--w c-i--o" aria-label="커리큘럼">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <path d="M8 24h12l18-12v40L20 40H8Z" />
+            <path d="M50 24c3 2 3 10 0 12" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+          </svg>
+        </span>
+        <p class="c-b">curriculum</p>
+        <h4 class="c-h">커리큘럼</h4>
+        <p class="c-d">
+          <strong>Intro</strong>
+          <strong>기획자가 하는 일</strong>
+        </p>
+      </div>
+
+      <div class="c-i c-i--a" aria-label="섹션">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M7 17L17 7"
+              stroke="currentColor"
+              stroke-width="2.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M10 7h7v7"
+              stroke="currentColor"
+              stroke-width="2.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        <p class="c-b">session 1</p>
+        <h4 class="c-h">섹션 1</h4>
+        <p class="c-d">
+          <strong>15:40 - 16:40 (60’)</strong>
+        </p>
+      </div>
+
+      <div class="c-i c-i--s" aria-label="라인업">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <circle cx="32" cy="20" r="14" />
+            <path d="M8 56c0-10.67 10.75-18 24-18s24 7.33 24 18" />
+          </svg>
+        </span>
+        <p class="c-b">Speaker</p>
+        <h4 class="c-h">기획자<br>윤명호</h4>
+        <p class="c-d"></p>
+      </div>
+
+      <div class="c-i c-i--w c-i--o" aria-label="커리큘럼">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <path d="M8 24h12l18-12v40L20 40H8Z" />
+            <path d="M50 24c3 2 3 10 0 12" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+          </svg>
+        </span>
+        <p class="c-b">curriculum</p>
+        <h4 class="c-h">커리큘럼</h4>
+        <p class="c-d">
+          <strong>Intro</strong>
+          <strong>기획자가 하는 일</strong>
+        </p>
+      </div>
+
+      <div class="c-i c-i--a" aria-label="섹션">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M7 17L17 7"
+              stroke="currentColor"
+              stroke-width="2.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M10 7h7v7"
+              stroke="currentColor"
+              stroke-width="2.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        <p class="c-b">session 1</p>
+        <h4 class="c-h">섹션 1</h4>
+        <p class="c-d">
+          <strong>15:40 - 16:40 (60’)</strong>
+        </p>
+      </div>
+
+      <div class="c-i c-i--a" aria-label="섹션">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M7 17L17 7"
+              stroke="currentColor"
+              stroke-width="2.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M10 7h7v7"
+              stroke="currentColor"
+              stroke-width="2.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        <p class="c-b">session 1</p>
+        <h4 class="c-h">섹션 1</h4>
+        <p class="c-d">
+          <strong>15:40 - 16:40 (60’)</strong>
+        </p>
+      </div>
+
+      <div class="c-i c-i--w c-i--o" aria-label="커리큘럼">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <path d="M8 24h12l18-12v40L20 40H8Z" />
+            <path d="M50 24c3 2 3 10 0 12" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+          </svg>
+        </span>
+        <p class="c-b">curriculum</p>
+        <h4 class="c-h">커리큘럼</h4>
+        <p class="c-d">
+          <strong>Intro</strong>
+          <strong>기획자가 하는 일</strong>
+        </p>
+      </div>
+
+      <div class="c-i c-i--s" aria-label="라인업">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <circle cx="32" cy="20" r="14" />
+            <path d="M8 56c0-10.67 10.75-18 24-18s24 7.33 24 18" />
+          </svg>
+        </span>
+        <p class="c-b">Speaker</p>
+        <h4 class="c-h">기획자<br>윤명호</h4>
+        <p class="c-d"></p>
+      </div>
+
+      <div class="c-i c-i--a" aria-label="섹션">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M7 17L17 7"
+              stroke="currentColor"
+              stroke-width="2.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M10 7h7v7"
+              stroke="currentColor"
+              stroke-width="2.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        <p class="c-b">session 1</p>
+        <h4 class="c-h">섹션 1</h4>
+        <p class="c-d">
+          <strong>15:40 - 16:40 (60’)</strong>
+        </p>
+      </div>
+
+      <div class="c-i c-i--s" aria-label="라인업">
+        <span class="c-ic" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="currentColor">
+            <circle cx="32" cy="20" r="14" />
+            <path d="M8 56c0-10.67 10.75-18 24-18s24 7.33 24 18" />
+          </svg>
+        </span>
+        <p class="c-b">Speaker</p>
+        <h4 class="c-h">기획자<br>윤명호</h4>
+        <p class="c-d"></p>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        const sectionEls = Array.from(document.querySelectorAll('.c-p')).filter(
+          section => section.querySelector('.c-i')
+        );
+        if (!('IntersectionObserver' in window) || !sectionEls.length) return;
+
+        const queue = [];
+        const seen = new WeakSet();
+        let playing = false;
+
+        const msToNumber = value => {
+          if (!value) return 0;
+          if (value.includes('ms')) return parseFloat(value);
+          if (value.includes('s')) return parseFloat(value) * 1000;
+          return parseFloat(value);
+        };
+
+        const getSectionDuration = section => {
+          const items = section.querySelectorAll('.c-i.is-visible');
+          if (!items.length) return 800;
+          let maxEnd = 0;
+          items.forEach(item => {
+            const styles = getComputedStyle(item);
+            const delay = msToNumber(styles.animationDelay);
+            const duration = msToNumber(styles.animationDuration);
+            maxEnd = Math.max(maxEnd, delay + duration);
+          });
+          return maxEnd || 800;
+        };
+
+        const processQueue = () => {
+          if (playing || !queue.length) return;
+          const nextSection = queue.shift();
+          if (!nextSection || seen.has(nextSection)) {
+            processQueue();
+            return;
+          }
+          playing = true;
+          seen.add(nextSection);
+          nextSection.querySelectorAll('.c-i').forEach(item => {
+            item.classList.add('is-visible');
+          });
+          const total = getSectionDuration(nextSection);
+          const handoff = Math.max(total * 0.75, total - 220);
+          setTimeout(() => {
+            playing = false;
+            processQueue();
+          }, handoff);
+        };
+
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting && !seen.has(entry.target)) {
+                queue.push(entry.target);
+                processQueue();
+              }
+            });
+          },
+          { threshold: 0.2 }
+        );
+
+        sectionEls.forEach(section => observer.observe(section));
+      })();
+    </script>
+  </body>
+</html>

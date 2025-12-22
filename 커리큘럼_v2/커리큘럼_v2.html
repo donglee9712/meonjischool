@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Curriculum cards preview</title>
     <style>
-    </style>
+  </style>
   </head>
   <body>
     <!-- 아래 내용은 imweb-snippet.html과 동일합니다 -->
@@ -26,6 +26,7 @@
         --pad: clamp(18px, 2.2vw, 32px);
         --muted: #000000;
         --text: #000000;
+        --stagger: 180ms;
 
         width: 100%;
         max-width: 1200px;
@@ -46,14 +47,14 @@
       }
 
       .meonji-curriculum + .meonji-curriculum {
-        margin-top: var(--gap);
+        margin-top: calc(var(--gap) * 2);
       }
 
       .meonji-curriculum__list {
         display: flex;
         flex-wrap: nowrap;
         gap: var(--gap);
-        align-items: flex-start;
+        align-items: stretch;
         padding: var(--gap) 0;
         overflow: visible;
       }
@@ -89,6 +90,41 @@
         -webkit-backdrop-filter: blur(10px) saturate(130%);
         transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, filter 180ms ease;
         isolation: isolate;
+        opacity: 0;
+        transform: translateY(38px);
+        animation: none;
+      }
+
+      .meonji-curriculum__item.is-visible {
+        animation: meonjiRiseUp var(--anim-speed, 441ms) ease-out both;
+      }
+
+      .meonji-curriculum__item.is-visible:nth-of-type(1) { animation-delay: 0ms; }
+      .meonji-curriculum__item.is-visible:nth-of-type(2) { animation-delay: calc(var(--stagger) * 1); }
+      .meonji-curriculum__item.is-visible:nth-of-type(3) { animation-delay: calc(var(--stagger) * 2); }
+      .meonji-curriculum__item.is-visible:nth-of-type(4) { animation-delay: calc(var(--stagger) * 3); }
+      .meonji-curriculum__item.is-visible:nth-of-type(5) { animation-delay: calc(var(--stagger) * 4); }
+      .meonji-curriculum__item.is-visible:nth-of-type(6) { animation-delay: calc(var(--stagger) * 5); }
+      .meonji-curriculum__item.is-visible:nth-of-type(7) { animation-delay: calc(var(--stagger) * 6); }
+      .meonji-curriculum__item.is-visible:nth-of-type(8) { animation-delay: calc(var(--stagger) * 7); }
+      .meonji-curriculum__item.is-visible:nth-of-type(1) { --anim-speed: 465ms; }
+      .meonji-curriculum__item.is-visible:nth-of-type(2) { --anim-speed: 429ms; }
+      .meonji-curriculum__item.is-visible:nth-of-type(3) { --anim-speed: 502ms; }
+      .meonji-curriculum__item.is-visible:nth-of-type(4) { --anim-speed: 453ms; }
+      .meonji-curriculum__item.is-visible:nth-of-type(5) { --anim-speed: 526ms; }
+      .meonji-curriculum__item.is-visible:nth-of-type(6) { --anim-speed: 478ms; }
+      .meonji-curriculum__item.is-visible:nth-of-type(7) { --anim-speed: 550ms; }
+      .meonji-curriculum__item.is-visible:nth-of-type(8) { --anim-speed: 502ms; }
+
+      @keyframes meonjiRiseUp {
+        from {
+          opacity: 0;
+          transform: translateY(44px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
       }
 
       .meonji-curriculum__item--speaker {
@@ -159,7 +195,7 @@
 
       .meonji-curriculum__item--speaker .meonji-curriculum__icon {
         background: #f5f5f6;
-        border-color: #f5f5f6;
+        border-color: var(--tile-stroke);
         color: #ff7f00;
       }
 
@@ -171,7 +207,9 @@
         box-shadow: none;
         overflow: hidden;
         border-radius: var(--radius);
-        align-self: flex-start;
+        align-self: stretch;
+        display: flex;
+        height: 100%;
       }
 
       .meonji-curriculum__item--photo .meonji-curriculum__label,
@@ -183,9 +221,11 @@
       .meonji-curriculum__item--photo img {
         display: block;
         width: 100%;
+        height: 100%;
         margin: 0;
         border-radius: 0;
-        height: auto;
+        object-fit: cover;
+        flex: 1 1 auto;
       }
 
 
@@ -307,20 +347,217 @@
       }
 
       .meonji-curriculum__item--speaker.meonji-curriculum-extra__item {
-        background: #1e1e1e;
-        color: #ffffff;
+        background: #ffffff;
+        color: #000000;
       }
 
       .meonji-curriculum__item--speaker.meonji-curriculum-extra__item .meonji-curriculum__label,
       .meonji-curriculum__item--speaker.meonji-curriculum-extra__item .meonji-curriculum__heading,
       .meonji-curriculum__item--speaker.meonji-curriculum-extra__item .meonji-curriculum__desc {
-        color: #ffffff;
+        color: #000000;
       }
 
       .meonji-curriculum__item--speaker.meonji-curriculum-extra__item .meonji-curriculum__icon {
-        background: rgba(255, 255, 255, 0.12);
-        border-color: rgba(255, 255, 255, 0.2);
+        background: #f5f5f6;
+        border-color: var(--tile-stroke);
+        color: #000000;
+      }
+
+      /* Orange block for section 1 curriculum */
+      .meonji-curriculum__item--orange-block {
+        background: #ff7f00;
         color: #ffffff;
+        border-color: #ff7f00;
+      }
+
+      .meonji-curriculum__item--orange-block .meonji-curriculum__label,
+      .meonji-curriculum__item--orange-block .meonji-curriculum__heading,
+      .meonji-curriculum__item--orange-block .meonji-curriculum__desc {
+        color: #ffffff;
+      }
+
+      .meonji-curriculum__item--orange-block .meonji-curriculum__icon {
+        background: #ffffff;
+        border-color: #ffffff;
+        color: #ff7f00;
+      }
+
+      /* Mint accent for designer section */
+      .meonji-curriculum__item--mint-block {
+        background: #6425ea;
+        color: #f7f3ff;
+      }
+
+      .meonji-curriculum__item--mint-block .meonji-curriculum__label,
+      .meonji-curriculum__item--mint-block .meonji-curriculum__heading,
+      .meonji-curriculum__item--mint-block .meonji-curriculum__desc {
+        color: #f7f3ff;
+      }
+
+      .meonji-curriculum__item--mint-block .meonji-curriculum__icon {
+        background: #ffffff;
+        border-color: #ffffff;
+        color: #6425ea;
+      }
+
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--mint-accent {
+        color: #6425ea;
+        background: #ffffff;
+      }
+
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--mint-accent .meonji-curriculum__label,
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--mint-accent .meonji-curriculum__heading,
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--mint-accent .meonji-curriculum__desc {
+        color: #6425ea;
+      }
+
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--mint-accent .meonji-curriculum__icon {
+        background: #f5f5f6;
+        border-color: var(--tile-stroke);
+        color: #6425ea;
+      }
+
+      /* Sky accent for section 3 */
+      .meonji-curriculum__item--sky-block {
+        background: #89dcff;
+        color: #0b2430;
+      }
+
+      .meonji-curriculum__item--sky-block .meonji-curriculum__label,
+      .meonji-curriculum__item--sky-block .meonji-curriculum__heading,
+      .meonji-curriculum__item--sky-block .meonji-curriculum__desc {
+        color: #0b2430;
+      }
+
+      .meonji-curriculum__item--sky-block .meonji-curriculum__icon {
+        background: #ffffff;
+        border-color: #ffffff;
+        color: #89dcff;
+      }
+
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--sky-accent {
+        color: #89dcff;
+        background: #ffffff;
+      }
+
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--sky-accent .meonji-curriculum__label,
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--sky-accent .meonji-curriculum__heading,
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--sky-accent .meonji-curriculum__desc {
+        color: #89dcff;
+      }
+
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--sky-accent .meonji-curriculum__icon {
+        background: #f5f5f6;
+        border-color: var(--tile-stroke);
+        color: #89dcff;
+      }
+
+      /* Sun accent for section 2 */
+      .meonji-curriculum__item--sun-block {
+        background: #ffcc00;
+        color: #2a2500;
+      }
+
+      .meonji-curriculum__item--sun-block .meonji-curriculum__label,
+      .meonji-curriculum__item--sun-block .meonji-curriculum__heading,
+      .meonji-curriculum__item--sun-block .meonji-curriculum__desc {
+        color: #2a2500;
+      }
+
+      .meonji-curriculum__item--sun-block .meonji-curriculum__icon {
+        background: #ffffff;
+        border-color: #ffffff;
+        color: #ffcc00;
+      }
+
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--sun-accent {
+        color: #ffcc00;
+        background: #ffffff;
+      }
+
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--sun-accent .meonji-curriculum__label,
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--sun-accent .meonji-curriculum__heading,
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--sun-accent .meonji-curriculum__desc {
+        color: #ffcc00;
+      }
+
+      .meonji-curriculum__item--speaker.meonji-curriculum__item--sun-accent .meonji-curriculum__icon {
+        background: #f5f5f6;
+        border-color: var(--tile-stroke);
+        color: #ffcc00;
+      }
+
+      /* Curriculum (wide) cards: white background + keycolor border */
+      .meonji-curriculum__item--wide.meonji-curriculum__item--orange-block {
+        background: #ffffff;
+        color: #000000;
+        border-color: #ff7f00;
+      }
+
+      .meonji-curriculum__item--wide.meonji-curriculum__item--orange-block .meonji-curriculum__label,
+      .meonji-curriculum__item--wide.meonji-curriculum__item--orange-block .meonji-curriculum__heading,
+      .meonji-curriculum__item--wide.meonji-curriculum__item--orange-block .meonji-curriculum__desc {
+        color: #000000;
+      }
+
+      .meonji-curriculum__item--wide.meonji-curriculum__item--orange-block .meonji-curriculum__icon {
+        background: #f5f5f6;
+        border-color: var(--tile-stroke);
+        color: #ff7f00;
+      }
+
+      .meonji-curriculum__item--wide.meonji-curriculum__item--sun-block {
+        background: #ffffff;
+        color: #000000;
+        border-color: #ffcc00;
+      }
+
+      .meonji-curriculum__item--wide.meonji-curriculum__item--sun-block .meonji-curriculum__label,
+      .meonji-curriculum__item--wide.meonji-curriculum__item--sun-block .meonji-curriculum__heading,
+      .meonji-curriculum__item--wide.meonji-curriculum__item--sun-block .meonji-curriculum__desc {
+        color: #000000;
+      }
+
+      .meonji-curriculum__item--wide.meonji-curriculum__item--sun-block .meonji-curriculum__icon {
+        background: #f5f5f6;
+        border-color: var(--tile-stroke);
+        color: #ffcc00;
+      }
+
+      .meonji-curriculum__item--wide.meonji-curriculum__item--sky-block {
+        background: #ffffff;
+        color: #000000;
+        border-color: #89dcff;
+      }
+
+      .meonji-curriculum__item--wide.meonji-curriculum__item--sky-block .meonji-curriculum__label,
+      .meonji-curriculum__item--wide.meonji-curriculum__item--sky-block .meonji-curriculum__heading,
+      .meonji-curriculum__item--wide.meonji-curriculum__item--sky-block .meonji-curriculum__desc {
+        color: #000000;
+      }
+
+      .meonji-curriculum__item--wide.meonji-curriculum__item--sky-block .meonji-curriculum__icon {
+        background: #f5f5f6;
+        border-color: var(--tile-stroke);
+        color: #89dcff;
+      }
+
+      .meonji-curriculum__item--wide.meonji-curriculum__item--mint-block {
+        background: #ffffff;
+        color: #000000;
+        border-color: #6425ea;
+      }
+
+      .meonji-curriculum__item--wide.meonji-curriculum__item--mint-block .meonji-curriculum__label,
+      .meonji-curriculum__item--wide.meonji-curriculum__item--mint-block .meonji-curriculum__heading,
+      .meonji-curriculum__item--wide.meonji-curriculum__item--mint-block .meonji-curriculum__desc {
+        color: #000000;
+      }
+
+      .meonji-curriculum__item--wide.meonji-curriculum__item--mint-block .meonji-curriculum__icon {
+        background: #f5f5f6;
+        border-color: var(--tile-stroke);
+        color: #6425ea;
       }
 
       .meonji-curriculum-extra {
@@ -421,7 +658,7 @@
           </div>
         </div>
 
-        <div class="meonji-curriculum__item meonji-curriculum__item--parking-b meonji-curriculum__item--wide" aria-label="라인업">
+        <div class="meonji-curriculum__item meonji-curriculum__item--wide meonji-curriculum__item--orange-block" aria-label="라인업">
           <span class="meonji-curriculum__icon" aria-hidden="true">
             <svg viewBox="0 0 64 64" fill="currentColor">
               <path d="M8 24h12l18-12v40L20 40H8Z" />
@@ -477,7 +714,7 @@
         <section class="meonji-curriculum" aria-label="커리큘럼 안내 섹션">
       <div class="meonji-curriculum__list">
         <div class="meonji-curriculum__pair meonji-curriculum__pair--stack">
-          <div class="meonji-curriculum__item meonji-curriculum__item--address" aria-label="섹션">
+          <div class="meonji-curriculum__item meonji-curriculum__item--sun-block" aria-label="섹션">
             <span class="meonji-curriculum__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
                 <path
@@ -503,7 +740,7 @@
             </p>
           </div>
 
-          <div class="meonji-curriculum__item meonji-curriculum__item--parking-a meonji-curriculum__item--medium meonji-curriculum__item--speaker" aria-label="라인업">
+          <div class="meonji-curriculum__item meonji-curriculum__item--parking-a meonji-curriculum__item--medium meonji-curriculum__item--speaker meonji-curriculum__item--sun-accent" aria-label="라인업">
             <span class="meonji-curriculum__icon" aria-hidden="true">
               <svg viewBox="0 0 64 64" fill="currentColor">
                 <circle cx="32" cy="20" r="14" />
@@ -519,11 +756,11 @@
         <div class="meonji-curriculum__item meonji-curriculum__item--parking-a meonji-curriculum__item--medium meonji-curriculum__item--speaker meonji-curriculum__item--photo" aria-label="포토">
           <p class="meonji-curriculum__label"></p>
           <h4 class="meonji-curriculum__heading"></h4>
-          <img src="https://cdn.imweb.me/upload/S20240719b5234893366cf/a96bd5d00962e.png" alt="포토" style="width:100%;height:auto;border-radius:0;margin:0;display:block;">
+          <img src="https://cdn.imweb.me/upload/S20240719b5234893366cf/87282a715f76b.png" alt="포토" style="width:100%;height:auto;border-radius:0;margin:0;display:block;">
         </div>
         </div>
 
-        <div class="meonji-curriculum__item meonji-curriculum__item--parking-b meonji-curriculum__item--wide" aria-label="라인업">
+        <div class="meonji-curriculum__item meonji-curriculum__item--wide meonji-curriculum__item--sun-block" aria-label="라인업">
           <span class="meonji-curriculum__icon" aria-hidden="true">
             <svg viewBox="0 0 64 64" fill="currentColor">
               <path d="M8 24h12l18-12v40L20 40H8Z" />
@@ -572,7 +809,7 @@
     <section class="meonji-curriculum" aria-label="커리큘럼 안내 섹션">
       <div class="meonji-curriculum__list">
         <div class="meonji-curriculum__pair meonji-curriculum__pair--stack">
-          <div class="meonji-curriculum__item meonji-curriculum__item--address" aria-label="섹션">
+          <div class="meonji-curriculum__item meonji-curriculum__item--sky-block" aria-label="섹션">
             <span class="meonji-curriculum__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
                 <path
@@ -598,7 +835,7 @@
             </p>
           </div>
 
-          <div class="meonji-curriculum__item meonji-curriculum__item--parking-a meonji-curriculum__item--medium meonji-curriculum__item--speaker" aria-label="라인업">
+          <div class="meonji-curriculum__item meonji-curriculum__item--parking-a meonji-curriculum__item--medium meonji-curriculum__item--speaker meonji-curriculum__item--sky-accent" aria-label="라인업">
             <span class="meonji-curriculum__icon" aria-hidden="true">
               <svg viewBox="0 0 64 64" fill="currentColor">
                 <circle cx="32" cy="20" r="14" />
@@ -618,7 +855,7 @@
         </div>
         </div>
 
-        <div class="meonji-curriculum__item meonji-curriculum__item--parking-b meonji-curriculum__item--wide" aria-label="라인업">
+        <div class="meonji-curriculum__item meonji-curriculum__item--wide meonji-curriculum__item--sky-block" aria-label="라인업">
           <span class="meonji-curriculum__icon" aria-hidden="true">
             <svg viewBox="0 0 64 64" fill="currentColor">
               <path d="M8 24h12l18-12v40L20 40H8Z" />
@@ -667,7 +904,7 @@
     <section class="meonji-curriculum" aria-label="커리큘럼 안내 섹션">
       <div class="meonji-curriculum__list">
         <div class="meonji-curriculum__pair meonji-curriculum__pair--stack">
-          <div class="meonji-curriculum__item meonji-curriculum__item--address" aria-label="섹션">
+          <div class="meonji-curriculum__item meonji-curriculum__item--mint-block" aria-label="섹션">
             <span class="meonji-curriculum__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
                 <path
@@ -693,7 +930,7 @@
             </p>
           </div>
 
-          <div class="meonji-curriculum__item meonji-curriculum__item--parking-a meonji-curriculum__item--medium meonji-curriculum__item--speaker" aria-label="라인업">
+          <div class="meonji-curriculum__item meonji-curriculum__item--parking-a meonji-curriculum__item--medium meonji-curriculum__item--speaker meonji-curriculum__item--mint-accent" aria-label="라인업">
             <span class="meonji-curriculum__icon" aria-hidden="true">
               <svg viewBox="0 0 64 64" fill="currentColor">
                 <circle cx="32" cy="20" r="14" />
@@ -713,7 +950,7 @@
         </div>
         </div>
 
-        <div class="meonji-curriculum__item meonji-curriculum__item--parking-b meonji-curriculum__item--wide" aria-label="라인업">
+        <div class="meonji-curriculum__item meonji-curriculum__item--wide meonji-curriculum__item--mint-block" aria-label="라인업">
           <span class="meonji-curriculum__icon" aria-hidden="true">
             <svg viewBox="0 0 64 64" fill="currentColor">
               <path d="M8 24h12l18-12v40L20 40H8Z" />
@@ -741,5 +978,71 @@
       </div>
     </section>
 
+    <script>
+      (function() {
+        const sectionEls = Array.from(document.querySelectorAll('.meonji-curriculum')).filter(
+          sec => sec.querySelector('.meonji-curriculum__item')
+        );
+        if (!('IntersectionObserver' in window) || !sectionEls.length) return;
+
+        const queue = [];
+        const seen = new WeakSet();
+        let playing = false;
+
+        const msToNumber = value => {
+          if (!value) return 0;
+          if (value.includes('ms')) return parseFloat(value);
+          if (value.includes('s')) return parseFloat(value) * 1000;
+          return parseFloat(value);
+        };
+
+        const getSectionDuration = section => {
+          const items = section.querySelectorAll('.meonji-curriculum__item.is-visible');
+          if (!items.length) return 800;
+          let maxEnd = 0;
+          items.forEach(item => {
+            const styles = getComputedStyle(item);
+            const delay = msToNumber(styles.animationDelay);
+            const duration = msToNumber(styles.animationDuration);
+            maxEnd = Math.max(maxEnd, delay + duration);
+          });
+          return maxEnd || 800;
+        };
+
+        const processQueue = () => {
+          if (playing || !queue.length) return;
+          const nextSection = queue.shift();
+          if (!nextSection || seen.has(nextSection)) {
+            processQueue();
+            return;
+          }
+          playing = true;
+          seen.add(nextSection);
+          nextSection.querySelectorAll('.meonji-curriculum__item').forEach(item => {
+            item.classList.add('is-visible');
+          });
+          const total = getSectionDuration(nextSection);
+          const handoff = Math.max(total * 0.75, total - 220); // overlap ~220ms near the end
+          setTimeout(() => {
+            playing = false;
+            processQueue();
+          }, handoff);
+        };
+
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting && !seen.has(entry.target)) {
+                queue.push(entry.target);
+                processQueue();
+              }
+            });
+          },
+          { threshold: 0.2 }
+        );
+
+        sectionEls.forEach(sec => observer.observe(sec));
+      })();
+    </script>
   </body>
 </html>
