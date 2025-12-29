@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll Star Video</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
+      .scroll-video {
+        position: relative;
+        height: 320vh;
+        margin: 0 auto;
+        padding: 0;
+        max-width: none;
+        width: 100%;
+      }
+
+      .scroll-video__sticky {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 0;
+      }
+
+      .scroll-video__content {
+        display: grid;
+        gap: 0;
+        justify-items: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .scroll-video__frame {
+        width: 24.7vw;
+        height: 24.7vh;
+        margin: auto;
+        border-radius: 0;
+        overflow: hidden;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .scroll-video__media {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+        object-position: center;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="scroll-video" aria-label="스크롤 별빛 영상">
+      <div class="scroll-video__sticky">
+        <div class="scroll-video__content">
+          <div class="scroll-video__frame">
+            <video class="scroll-video__media" muted playsinline preload="auto">
+              <source src="별 동영상.webm" type="video/webm" />
+            </video>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      (function() {
+        const section = document.querySelector('.scroll-video');
+        const video = section ? section.querySelector('video') : null;
+        if (!section || !video) return;
+
+        let targetTime = 0;
+        let duration = 0;
+        let isActive = true;
+
+        const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+        const hasMetadata = () => Number.isFinite(video.duration) && video.duration > 0;
+
+        const updateTargetFromScroll = () => {
+          const rect = section.getBoundingClientRect();
+          const scrollable = rect.height - window.innerHeight;
+          const progress = scrollable > 0 ? clamp(-rect.top / scrollable, 0, 1) : 0;
+          targetTime = progress * duration;
+        };
+
+        const handleMetadata = () => {
+          duration = hasMetadata() ? video.duration : 0;
+          updateTargetFromScroll();
+        };
+
+        video.addEventListener('loadedmetadata', handleMetadata);
+        video.addEventListener('durationchange', handleMetadata);
+        window.addEventListener('scroll', updateTargetFromScroll, { passive: true });
+        window.addEventListener('resize', updateTargetFromScroll);
+
+        if ('IntersectionObserver' in window) {
+          const activeObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+              isActive = entry.isIntersecting;
+            });
+          });
+          activeObserver.observe(section);
+        }
+
+        const render = () => {
+          if (isActive && duration && !video.seeking) {
+            const delta = Math.abs(video.currentTime - targetTime);
+            if (delta > 0.03) {
+              video.currentTime = targetTime;
+            }
+          }
+          requestAnimationFrame(render);
+        };
+
+        if (video.readyState >= 1) {
+          handleMetadata();
+        } else {
+          video.load();
+        }
+        updateTargetFromScroll();
+        requestAnimationFrame(render);
+      })();
+    </script>
+  </body>
+</html>
