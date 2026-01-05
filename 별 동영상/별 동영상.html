@@ -9,7 +9,18 @@
       body {
         margin: 0;
         padding: 0;
-        height: 100%;
+        background-color: #000000;
+      }
+
+      div._widget_data {
+        background-color: #000000;
+      }
+
+      :root {
+        --bg-image: url("https://cdn.imweb.me/upload/S20240719b5234893366cf/0f65e3cd98afb.jpg");
+        --bg-image-mobile: url("https://cdn.imweb.me/upload/S20240719b5234893366cf/66aada72fe00a.jpg");
+        --bg-image-current: var(--bg-image);
+        --frame-size: clamp(64px, 12vw, 200px);
       }
 
       .scroll-video {
@@ -18,7 +29,17 @@
         margin: 0 auto;
         padding: 0;
         max-width: none;
-        width: 100%;
+        width: 100vw;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        overflow-x: clip;
+      }
+
+      .scroll-video,
+      .scroll-video * {
+        max-width: 100vw !important;
       }
 
       .scroll-video__sticky {
@@ -28,6 +49,18 @@
         display: grid;
         place-items: center;
         padding: 0;
+        overflow: hidden;
+        isolation: isolate;
+        width: 100%;
+      }
+
+      .scroll-video__sticky::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: var(--bg-image-current) center center / cover no-repeat;
+        background-color: #000000;
       }
 
       .scroll-video__content {
@@ -39,13 +72,14 @@
       }
 
       .scroll-video__frame {
-        width: 24.7vw;
-        height: 24.7vh;
+        width: var(--frame-size);
+        aspect-ratio: 1486 / 1922;
         margin: auto;
         border-radius: 0;
         overflow: hidden;
         background: transparent;
         box-shadow: none;
+        transform: translateY(0);
       }
 
       .scroll-video__media {
@@ -55,6 +89,37 @@
         object-fit: contain;
         object-position: center;
       }
+
+      @media (max-width: 1024px) {
+        .scroll-video {
+          background-color: #000000;
+        }
+
+        .scroll-video__sticky {
+          background-color: #000000;
+        }
+
+        .scroll-video__sticky::before {
+          background-size: 110% 110%;
+        }
+
+        :root {
+          --bg-image-current: url("https://cdn.imweb.me/upload/S20240719b5234893366cf/2eaba4511de99.jpg");
+          --frame-size: clamp(64px, 14vw, 200px);
+        }
+
+        .scroll-video__frame {
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 640px) {
+        :root {
+          --frame-size: clamp(60px, 18vw, 200px);
+        }
+      }
+
+      
     </style>
   </head>
   <body>
@@ -63,7 +128,7 @@
         <div class="scroll-video__content">
           <div class="scroll-video__frame">
             <video class="scroll-video__media" muted playsinline preload="auto">
-              <source src="별 동영상.webm" type="video/webm" />
+              <source src="https://donglee9712.github.io/meonjischool/%EB%B3%84%20%EB%8F%99%EC%98%81%EC%83%81/%EB%B3%84%20%EB%8F%99%EC%98%81%EC%83%81.webm" type="video/webm" />
             </video>
           </div>
         </div>
@@ -126,6 +191,7 @@
         }
         updateTargetFromScroll();
         requestAnimationFrame(render);
+
       })();
     </script>
   </body>
